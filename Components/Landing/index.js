@@ -12,7 +12,7 @@ const index = ({navigation}) => {
                 <View style={{alignItems:'center'}}>
 
                     <Image 
-                    source = {require("../../images/logoyohanfastfood.png")}
+                    source = {require("../../images/logofinal.png")}
                     />
 
                     <Text style={styles.styleTitle}>
@@ -28,15 +28,16 @@ const index = ({navigation}) => {
             <View style={styles.styleButtonsView}>
 
                 <Button
-                    title="Inscription"
-                    buttonStyle={styles.styleButtons}
-                    onPress={() => navigation.navigate('Register')}
+                    title="CONNEXION"
+                    buttonStyle={styles.styleButtonConnexion}
+                    onPress={() => navigation.navigate('Login')}
+                    titleStyle={{color:'#535151'}}
                 />
 
                 <Button
-                    title="Connexion"
-                    buttonStyle={styles.styleButtons}
-                    onPress={() => navigation.navigate('Login')}
+                    title="INSCRIPTION"
+                    buttonStyle={styles.styleButtonInscription}
+                    onPress={() => navigation.navigate('Register')}
                 />
 
             </View>

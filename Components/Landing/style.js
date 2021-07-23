@@ -1,31 +1,37 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
+import { generalColors } from '../../Colors';
 
 export const styles = StyleSheet.create({
     styleFirstView:{
         flex:1,
         padding:10,
-        backgroundColor:"#C7A093"
+        backgroundColor:generalColors.backgroundColorLandingAuth
     },
     styleImageTextView:{
-        backgroundColor:"#C7A093",
+        backgroundColor:generalColors.backgroundColorLandingAuth,
         alignItems:'center',
-        flex:1,
+        flex:0.99,
         flexDirection:"row",
         justifyContent:"center"
     },
     styleTitle:{
-        fontSize:18,
-        color:'black',
+        fontSize:20,
+        color:'#DBDAFF',
         fontWeight:"bold"
     },
     styleButtonsView:{
         justifyContent:"flex-end",
-        backgroundColor:"#C7A093"
+        backgroundColor:generalColors.backgroundColorLandingAuth,
     },
-    styleButtons:{
+    styleButtonConnexion:{
         borderRadius:15,
-        backgroundColor:"brown",
+        backgroundColor:"#FFFDFD",
+        margin:10
+    },
+    styleButtonInscription:{
+        borderRadius:15,
+        backgroundColor:"#F89502",
         margin:10
     }
 })

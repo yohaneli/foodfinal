@@ -4,19 +4,15 @@ import { Button,Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { styles } from './style';
 import Header from '../Header';
+import { generalColors } from '../../Colors';
 
 const index = ({navigation}) => {
     return (
         <View style={styles.styleFirstView}>
 
-            <Header />
-
             <View style={styles.styleViewTitle}>
 
-                <Text style={{
-                    fontWeight:"bold",
-                    fontSize:22
-                }}> Se connecter </Text>
+                <Text style={styles.styleTextTitle}> CONNECTEZ-VOUS ! </Text>
 
             </View>
 
@@ -26,46 +22,35 @@ const index = ({navigation}) => {
                 placeholder="Adresse Mail"
                 autoCorrect={false}
                 keyboardType="email-address"
-                placeholderTextColor="black"
-                style={{
-                    backgroundColor:"white",
-                    borderRadius:10,
-                    height:40,
-                    width:50
-                }}
+                placeholderTextColor="white"
+                style={styles.styleInputs}
                 />
 
                 <Input 
                 placeholder="Mot de passe"
                 autoCorrect={false}
-                placeholderTextColor="black"
-                style={{
-                    backgroundColor:"white",
-                    borderRadius:10,
-                    height:40,
-                    width:50
-                }}
+                secureTextEntry={true}
+                placeholderTextColor="white"
+                style={styles.styleInputs}
                 />
 
+                <View style={styles.styleTextForgotPassword}>
+
+                    <Text style={{color:"white"}}>
+                        Mot de passe oublié
+                    </Text>
+
+                </View>
+
+            </View>
+
+            <View style={styles.styleButtonView}>
+            
                 <Button
-                    title="Connexion"
-                    buttonStyle={styles.styleButtons}
-                />
-
-                <Text style={{margin:5}}>
-                    Vous êtes nouveau ? Crée ton compte ici     
-                </Text>
-
-                <Button 
-                title="Inscription"
-                />
-
-                <Text style={{margin:5}}>
-                    Mot de passe oublié ? Appuyez ici
-                </Text>
-
-                <Button 
-                title="Mot de passe oublié"
+                    title="CONNEXION"
+                    buttonStyle={styles.styleButtonConnexion}
+                    titleStyle={{color:'#535151'}}
+                    onPress={() => navigation.navigate('Home')}
                 />
 
             </View>
