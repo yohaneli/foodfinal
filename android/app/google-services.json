@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "460172142144",
+    "project_id": "foodfigma",
+    "storage_bucket": "foodfigma.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:460172142144:android:1b2bb9b790c57709cfa1a5",
+        "android_client_info": {
+          "package_name": "com.foodfigma"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "460172142144-0fgtjgbj1nsnunjmvg2t067d7qn56ojp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlho8UNVizybfxovt8Ry3P8YUt1h1ll6Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "460172142144-0fgtjgbj1nsnunjmvg2t067d7qn56ojp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

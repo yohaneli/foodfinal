@@ -1,8 +1,10 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import { View, Text,FlatList,Image  } from 'react-native';
 import { styles } from './style';
-// import {CardTwo} from 'react-native-card-ui';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from '@react-navigation/native';
+import {FirebaseContext} from "../../FirebaseContext";
+import { useSelector } from 'react-redux';
 
 const categories = [
     {
@@ -72,24 +74,59 @@ const categories = [
 
   );
 
-  const ItemMenus = ({ title,price }) => (
+  const ItemMenus = ({ title,price }) => {
 
-    <View style={styles.item}>
+    const navigation = useNavigation();
 
-        <Image 
-        source = {require("../../images/4mini.png")}
-        />
+    return (
 
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.title}>{price}</Text>
+      <View style={styles.itemMenus}>
+
+          <Image 
+          source = {require("../../images/4mini.png")}
+          onPress={() => console.log("detail")}
+          />
+
+        <View style={styles.viewMenuInfos}>
+
+          <View style={{backgroundColor:"white",flexDirection:"row"}}>
+
+            <Text style={styles.menuName} onPress={() => navigation.navigate("Detail")}>{title}</Text>
+
+            <Text>{"   "}</Text>
+
+            <Icon
+            name="plus"
+            size={14}
+            color="orange"
+            style={{alignSelf:"flex-end"}}
+            onPress={() => console.log("add panier")}
+            />
+
+          </View>
 
 
-    </View>
+          <Text style={styles.menuPrice}>{price}</Text>
 
-  ); 
+        </View>
+
+
+      </View>
+    )
+    }; 
 
 
 const index = () => {
+
+   const navigation = useNavigation();
+
+    const firebase = useContext(FirebaseContext);
+
+    console.log(firebase);
+
+    const {exemple} = useSelector(state => state);
+
+    console.log(exemple);
 
     const renderItemCategories = ({ item }) => (
         <ItemCategories title={item.title} />
@@ -98,19 +135,19 @@ const index = () => {
       const renderItemMenus = ({ item }) => (
         <ItemMenus title={item.title} price={item.price}/>
       );
-    
+        
     return (
 
         <View style={styles.styleFirstView}>
 
             <View style={{backgroundColor:'white',alignItems:'flex-end',marginTop:10}}>
 
-                    <Icon
-                    name="bars"
-                    size={24}
-                    color="orange"
-                    onPress={() => console.log("mon compte")}
-                    />
+              <Icon
+              name="user"
+              size={24}
+              color="orange"
+              onPress={() => console.log("mon compte")}
+              />
 
             </View>
 

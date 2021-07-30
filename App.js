@@ -17,6 +17,8 @@ import Landing from './Components/Landing';
 import Login from './Components/Login';
 import Register from './Components/Register';
 import Home from './Components/Home';
+import Detail from './Components/Detail';
+import MonCompte from './Components/MonCompte';
 
 const Stack = createStackNavigator();
 
@@ -38,6 +40,8 @@ const App = ({navigation}) => {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Detail" component={Detail} />
+        <Stack.Screen name="MonCompte" component={MonCompte} />
 
       </Stack.Navigator>
 
