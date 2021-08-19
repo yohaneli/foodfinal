@@ -1,37 +1,11 @@
-import React,{useContext} from 'react'
+import React,{useContext,useEffect,useState} from 'react'
 import { View, Text,FlatList,Image  } from 'react-native';
 import { styles } from './style';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 import {FirebaseContext} from "../../FirebaseContext";
-import { useSelector } from 'react-redux';
-
-const categories = [
-    {
-      id: "1",
-      title: "Burgers",
-    },
-    {
-      id: "2",
-      title: "Kebabs",
-    },
-    {
-      id: "3",
-      title: "Salades",
-    },
-    {
-    id: "4",
-    title: "Boissons",
-    },
-    {
-    id: "5",
-    title: "Désserts",
-    },
-    {
-    id: "6",
-    title: "Autres",
-    },
-  ];
+import { useSelector,useDispatch } from 'react-redux';
+import { lireListeCategories } from '../../Redux/Actions/categories';
 
   const menus = [
     {
@@ -62,17 +36,17 @@ const categories = [
         title:"Double Whopper",
         price: "9.90€",    },
   ];
-
-
-  const ItemCategories = ({ title }) => (
+  
+  const ItemCategoriesF = ({ name }) => (
 
     <View style={styles.item}>
 
-      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.title}>{name}</Text>
 
     </View>
 
   );
+  
 
   const ItemMenus = ({ title,price }) => {
 
@@ -120,21 +94,58 @@ const index = () => {
 
    const navigation = useNavigation();
 
-    const firebase = useContext(FirebaseContext);
+   const [afficheCategories, setAfficheCategories] = useState(null);
 
-    console.log(firebase);
+    const {queryCategories} = useContext(FirebaseContext);
 
-    const {exemple} = useSelector(state => state);
+    const {categories} = useSelector(state => state);
 
-    console.log(exemple);
+    console.log(categories);
 
-    const renderItemCategories = ({ item }) => (
-        <ItemCategories title={item.title} />
+    const dispatchCategories = useDispatch();
+
+    const listeCategories = () => queryCategories().onSnapshot((snapshot) => {
+
+      // console.log(snapshot);
+
+      let templistCategories = [];
+
+      if(snapshot && !snapshot.empty){
+
+        snapshot.forEach(element =>{
+
+          //console.log(element.data().name);
+
+          templistCategories.push(element.data());
+
+        })
+
+        setAfficheCategories(templistCategories);
+
+        if(afficheCategories) {
+
+          dispatchCategories(lireListeCategories(templistCategories));
+
+        }
+
+      }
+
+    });
+    
+      const renderItemCategoriesF = ({ item }) => (
+        <ItemCategoriesF name={item.name} />
       );
 
       const renderItemMenus = ({ item }) => (
         <ItemMenus title={item.title} price={item.price}/>
       );
+     
+      useEffect(() => {
+        const cleanup2 =listeCategories();
+        return () => {
+          cleanup2;
+        }
+    },[])  
         
     return (
 
@@ -146,7 +157,7 @@ const index = () => {
               name="user"
               size={24}
               color="orange"
-              onPress={() => console.log("mon compte")}
+              onPress={() => navigation.navigate("MonCompte")}
               />
 
             </View>
@@ -159,8 +170,8 @@ const index = () => {
                     lineHeight:30,
                     fontStyle:'normal',
                     fontFamily:'Roboto',
-                    color:'#434354'
-                }}>Bonjour Yohan</Text>
+                    color:'#434354',
+                }}>Bonjour</Text>
 
                 <Text> {'\n'} </Text>
 
@@ -178,8 +189,8 @@ const index = () => {
                 <View style={{backgroundColor:'white'}}>
 
                     <FlatList
-                        data={categories}
-                        renderItem={renderItemCategories}
+                        data={afficheCategories}
+                        renderItem={renderItemCategoriesF}
                         keyExtractor={item => item.id}
                         horizontal={true}
                     />

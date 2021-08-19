@@ -1,12 +1,37 @@
-import React from 'react';
+import React,{useState,useContext} from 'react';
 import {Text,View } from 'react-native';
 import { Button,Input } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { styles } from './style';
-import Header from '../Header';
-import { generalColors } from '../../Colors';
+import { FirebaseContext } from '../../FirebaseContext';
 
 const index = ({navigation}) => {
+
+    const {auth} = useContext(FirebaseContext);
+
+    const [email, setEmail] = useState("");
+
+    const [password, setPassword] = useState("");
+
+    // console.log(auth);
+
+    const connexion = () => {
+
+        // console.log(email,password);
+
+        try {
+
+            auth.signInWithEmailAndPassword(email,password);
+
+            navigation.navigate('MonCompte')
+
+        } catch (error) {
+
+            console.log(error);
+
+        }
+
+    }
+
     return (
         <View style={styles.styleFirstView}>
 
@@ -24,6 +49,9 @@ const index = ({navigation}) => {
                 keyboardType="email-address"
                 placeholderTextColor="white"
                 style={styles.styleInputs}
+                onChangeText={setEmail}
+                value={email}
+                inputStyle={{color:"white"}}
                 />
 
                 <Input 
@@ -32,12 +60,23 @@ const index = ({navigation}) => {
                 secureTextEntry={true}
                 placeholderTextColor="white"
                 style={styles.styleInputs}
+                onChangeText={setPassword}
+                value={password}
+                inputStyle={{color:"white"}}
                 />
 
                 <View style={styles.styleTextForgotPassword}>
 
                     <Text style={{color:"white"}}>
                         Mot de passe oublié
+                    </Text>
+
+                </View>
+
+                <View style={styles.styleTextForgotPassword}>
+
+                    <Text style={{color:"white"}} onPress={() => navigation.navigate('Register')}>
+                        Pas encore inscrit ? Inscrivez-vous ici !
                     </Text>
 
                 </View>
@@ -50,7 +89,7 @@ const index = ({navigation}) => {
                     title="CONNEXION"
                     buttonStyle={styles.styleButtonConnexion}
                     titleStyle={{color:'#535151'}}
-                    onPress={() => navigation.navigate('Home')}
+                    onPress={connexion}
                 />
 
             </View>

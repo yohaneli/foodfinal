@@ -6,8 +6,8 @@
  * @flow strict-local
  */
 
-import React from 'react';
-import {Text,View,Button} from 'react-native';
+ import React,{useContext,useEffect,useState} from 'react';
+ import {Text,View,Button} from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -20,13 +20,37 @@ import Home from './Components/Home';
 import Detail from './Components/Detail';
 import MonCompte from './Components/MonCompte';
 
+import { FirebaseContext } from './FirebaseContext';
+
 const Stack = createStackNavigator();
 
 const Tab = createBottomTabNavigator();
 
-
 const App = ({navigation}) => {
 
+  const {auth} = useContext(FirebaseContext);
+
+  const [user, setUser] = useState(null);
+
+  //console.log(navigation)
+
+  useEffect(() => {
+
+    const authChange = auth.onAuthStateChanged(userAuth => {
+
+      setUser(userAuth);
+
+      console.log("user",userAuth)
+
+    })
+
+    return () => {
+
+      authChange
+
+    }
+
+  }, [])
 
   return (
 

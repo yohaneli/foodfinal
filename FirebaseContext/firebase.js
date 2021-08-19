@@ -6,18 +6,34 @@ import storage from '@react-native-firebase/storage';
 class Firebase {
 
     constructor() {
-
+        
         this.auth = auth();
-        this.firestore = firestore();
-        this.storage = storage();
+        this.storage=storage();
     }
 
-    //add token
+    // all queries
 
-    // queryAddToken = (data) => firestore.collection("token").add(data)
+    //list users
+
+    queryUsers = () => firestore().collection("users")
+
+    //add un user
+
+    queryAddUser = (id,data) => firestore().collection("users").doc(id).set(data);
+
+    //update user
+
+    queryUpdateUser = (id,data) => firestore().collection("users").doc(id).update(data);
+
+    //selectionner un user
+
+    queryUser = (id) => firestore().collection("users").doc(id).get();
+
+    // list categories
+
+    queryCategories = () => firestore().collection("categories");
+
 
 }
 
 export default Firebase;
-
-
