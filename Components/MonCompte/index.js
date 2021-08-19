@@ -12,7 +12,7 @@ const index = ({navigation}) => {
 
     const {infosUsers} = useSelector(state => state);
 
-    console.log(infosUsers.pseudo);
+    // console.log(infosUsers.pseudo);
 
     const [userName, setUserName] = useState("UserName")
 

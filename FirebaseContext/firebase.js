@@ -11,29 +11,35 @@ class Firebase {
         this.storage=storage();
     }
 
-    // all queries
+    /****************** toutes les requêtes ****************************/
 
-    //list users
+    //liste des uilisateurs
 
     queryUsers = () => firestore().collection("users")
 
-    //add un user
+    //ajouter un utilisateur en base après son inscription
 
     queryAddUser = (id,data) => firestore().collection("users").doc(id).set(data);
 
-    //update user
+    //modifier des infos sur un uitlisateur
 
     queryUpdateUser = (id,data) => firestore().collection("users").doc(id).update(data);
 
-    //selectionner un user
+    //selectionner un utilisateur
 
     queryUser = (id) => firestore().collection("users").doc(id).get();
 
-    // list categories
+    // lister toutes les categories
 
     queryCategories = () => firestore().collection("categories");
 
+    //lister tous les produits
 
+    queryProduits = () => firestore().collection("produits");
+
+    //selectionner un produit
+    
+    queryProduit = (id) => firestore().collection("produits").doc(id).get();
 }
 
 export default Firebase;

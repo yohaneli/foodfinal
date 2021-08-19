@@ -1,169 +1,152 @@
 import React,{useContext,useEffect,useState} from 'react'
-import { View, Text,FlatList,Image  } from 'react-native';
+import { View, Text,FlatList,Image,TouchableHighlight  } from 'react-native';
 import { styles } from './style';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
 import { useNavigation } from '@react-navigation/native';
-import {FirebaseContext} from "../../FirebaseContext";
+import { FirebaseContext } from "../../FirebaseContext";
 import { useSelector,useDispatch } from 'react-redux';
 import { lireListeCategories } from '../../Redux/Actions/categories';
+import { lireListeProduits } from '../../Redux/Actions/produits';
 
-  const menus = [
-    {
-      id: "1",
-      title:"Double Whopper",
-      price: "9.90€",
-    },
-    {
-      id: "2",
-      title:"Double Whopper",
-      price: "9.90€",
-    },
-    {
-      id: "3",
-      title:"Double Whopper",
-      price: "9.90€",
-    },
-    {
-        id: "4",
-        title:"Double Whopper",
-        price: "9.90€",    },
-    {
-        id: "5",
-        title:"Double Whopper",
-        price: "9.90€",    },
-    {
-        id: "6",
-        title:"Double Whopper",
-        price: "9.90€",    },
-  ];
+
   
   const ItemCategoriesF = ({ name }) => (
-
-    <View style={styles.item}>
-
-      <Text style={styles.title}>{name}</Text>
-
-    </View>
+      <View style={styles.item}>
+        <Text style={styles.title}>{name}</Text>
+      </View>
 
   );
+
+    const ItemProduits = ({ name,prix }) => {
   
-
-  const ItemMenus = ({ title,price }) => {
-
-    const navigation = useNavigation();
-
-    return (
-
-      <View style={styles.itemMenus}>
-
-          <Image 
-          source = {require("../../images/4mini.png")}
-          onPress={() => console.log("detail")}
-          />
-
-        <View style={styles.viewMenuInfos}>
-
-          <View style={{backgroundColor:"white",flexDirection:"row"}}>
-
-            <Text style={styles.menuName} onPress={() => navigation.navigate("Detail")}>{title}</Text>
-
-            <Text>{"   "}</Text>
-
-            <Icon
-            name="plus"
-            size={14}
-            color="orange"
-            style={{alignSelf:"flex-end"}}
-            onPress={() => console.log("add panier")}
+      return (
+  
+        <View style={styles.itemMenus}>
+            <Image 
+            source = {require("../../images/4mini.png")}
             />
-
+          <View style={styles.viewMenuInfos}>
+            <View style={{backgroundColor:"white",flexDirection:"row"}}>
+              <Text style={styles.menuName}>{name}</Text>
+              <Text>{"   "}</Text>
+              <Icon
+              name="plus"
+              size={14}
+              color="orange"
+              style={{alignSelf:"flex-end"}}
+              onPress={() => console.log("add panier")}
+              />
+            </View>
+            <Text style={styles.menuPrice}>{prix} €</Text>
           </View>
-
-
-          <Text style={styles.menuPrice}>{price}</Text>
-
         </View>
-
-
-      </View>
-    )
-    }; 
+      )
+      };
 
 
 const index = () => {
 
-   const navigation = useNavigation();
+    const navigation = useNavigation();
 
-   const [afficheCategories, setAfficheCategories] = useState(null);
+    const [afficheCategories, setAfficheCategories] = useState(null);
 
-    const {queryCategories} = useContext(FirebaseContext);
+    const [afficheProduits, setAfficheProduits] = useState(null)
 
-    const {categories} = useSelector(state => state);
+    const {queryCategories,queryProduits} = useContext(FirebaseContext);
 
-    console.log(categories);
-
+    const {categories,produits} = useSelector(state => state);
+    //console.log(produits)
     const dispatchCategories = useDispatch();
+    const dispatchProduits = useDispatch();
 
-    const listeCategories = () => queryCategories().onSnapshot((snapshot) => {
+    //fonction qui va lister les categories et les dispatch dans redux
 
+    const listeCategories = () => queryCategories().orderBy("date").onSnapshot((snapshot) => {
       // console.log(snapshot);
-
-      let templistCategories = [];
+      let tempListCategories = [];
 
       if(snapshot && !snapshot.empty){
 
         snapshot.forEach(element =>{
 
-          //console.log(element.data().name);
+          const newData = {id:element.id,...element.data()}
 
-          templistCategories.push(element.data());
+          tempListCategories.push(newData);
 
         })
 
-        setAfficheCategories(templistCategories);
+        setAfficheCategories(tempListCategories);
 
         if(afficheCategories) {
 
-          dispatchCategories(lireListeCategories(templistCategories));
+          dispatchCategories(lireListeCategories(tempListCategories));
+          //console.log("Liste des catégories : ",afficheCategories);
 
         }
 
       }
 
     });
-    
-      const renderItemCategoriesF = ({ item }) => (
-        <ItemCategoriesF name={item.name} />
-      );
 
-      const renderItemMenus = ({ item }) => (
-        <ItemMenus title={item.title} price={item.price}/>
-      );
-     
-      useEffect(() => {
-        const cleanup2 =listeCategories();
-        return () => {
-          cleanup2;
+      //fonction qui va lister les produits et les dispatch dans redux
+
+    const listeProduits = () => queryProduits().onSnapshot((snapshot) => {
+      let templistProduits = [];
+
+      if(snapshot && !snapshot.empty){
+
+        snapshot.forEach(element =>{
+
+          const newData = {id:element.id,...element.data()}
+
+          templistProduits.push(newData);
+
+        })
+
+        setAfficheProduits(templistProduits);
+
+        if(afficheProduits) {
+
+          dispatchProduits(lireListeProduits(templistProduits));
+
+          //console.log("Liste des produits : ",afficheProduits)
+
         }
-    },[])  
+
+      }
+
+    });
+
+  const renderItemCategoriesF = ({ item }) => (
+    <ItemCategoriesF key={item.id} name={item.name} />
+  );
+
+  const renderItemProduits = ({ item }) => (
+    <ItemProduits key={item.id} name={item.name} prix={item.prix} onPress={() => console.log("test")}/>
+  );
+  
+  useEffect(() => {
+    const cleanupCategories =listeCategories();
+    const cleanupProduits = listeProduits();
+    return () => {
+      cleanupCategories;
+      cleanupProduits;
+    }
+},[])  
         
     return (
 
         <View style={styles.styleFirstView}>
-
             <View style={{backgroundColor:'white',alignItems:'flex-end',marginTop:10}}>
-
               <Icon
               name="user"
               size={24}
               color="orange"
               onPress={() => navigation.navigate("MonCompte")}
               />
-
             </View>
-
-            <View style={{marginTop:30}}>
-
+            <View style={{marginTop:30,flex:1}}>
                 <Text style={{
                     fontSize:26,
                     fontWeight:'bold',
@@ -172,9 +155,7 @@ const index = () => {
                     fontFamily:'Roboto',
                     color:'#434354',
                 }}>Bonjour</Text>
-
                 <Text> {'\n'} </Text>
-
                 <Text style={{
                     fontSize:20,
                     fontWeight:'bold',
@@ -183,33 +164,24 @@ const index = () => {
                     fontFamily:'Roboto',
                     color:'#6C6C81'
                 }}> Que désirez-vous ?</Text>
-
                 <Text> {'\n'} </Text>
-
                 <View style={{backgroundColor:'white'}}>
-
                     <FlatList
                         data={afficheCategories}
                         renderItem={renderItemCategoriesF}
                         keyExtractor={item => item.id}
                         horizontal={true}
                     />
-
                 </View>
-
                 <View style={{backgroundColor:"white",marginTop:20 }}>
-
                     <FlatList
-                        data={menus}
-                        renderItem={renderItemMenus}
+                        data={afficheProduits}
+                        renderItem={renderItemProduits}
                         keyExtractor={item => item.id}
                         numColumns={2}
                     />
-
                 </View>
-
             </View>
-   
         </View>
     )
 }

@@ -40,7 +40,7 @@ const App = ({navigation}) => {
 
       setUser(userAuth);
 
-      console.log("user",userAuth)
+      // console.log("user",userAuth)
 
     })
 

@@ -23,14 +23,10 @@ const index = ({navigation}) => {
     const dispatch = useDispatch();
 
     const inscription = () => {
-
         // console.log(username,email,password);
-
         try {
 
             auth.createUserWithEmailAndPassword(email,password).then( async ({user}) => {
-
-                //dispatchProduct(affProduct({affModalProduct : !affModalProduct,data}))
 
                 dispatch(lireInfosUsers({userId:user.uid,pseudo:username,usermail:user.email}));
 
@@ -68,15 +64,10 @@ const index = ({navigation}) => {
     return (
 
         <View style={styles.styleFirstView}>
-
             <View style={styles.styleViewTitle}>
-
                 <Text style={styles.styleTextTitle}> INSCRIVEZ-VOUS ! </Text>
-
             </View>
-
             <View style={styles.styleViewInputs}>
-
                 <Input 
                 placeholder="Nom d'utilisateur"
                 autoCorrect={false}
@@ -110,26 +101,19 @@ const index = ({navigation}) => {
                 />
 
                 <View style={styles.styleTextForgotPassword}>
-
                     <Text style={{color:"white"}} onPress={() => navigation.navigate('Login')} >
                         Déjà inscrit ? Connectez-vous ici !
                     </Text>
-
                 </View>
-
             </View>
-
             <View style={styles.styleButtonView}>
-            
                 <Button
                     title="INSCRIPTION"
                     buttonStyle={styles.styleButtonInscription}
                     titleStyle={{color:'white'}}
                     onPress={inscription}
                 />
-
             </View>
-
         </View>
 
     )

@@ -11,13 +11,9 @@ const index = ({navigation}) => {
     const [email, setEmail] = useState("");
 
     const [password, setPassword] = useState("");
-
     // console.log(auth);
-
     const connexion = () => {
-
         // console.log(email,password);
-
         try {
 
             auth.signInWithEmailAndPassword(email,password);
@@ -34,13 +30,9 @@ const index = ({navigation}) => {
 
     return (
         <View style={styles.styleFirstView}>
-
             <View style={styles.styleViewTitle}>
-
                 <Text style={styles.styleTextTitle}> CONNECTEZ-VOUS ! </Text>
-
             </View>
-
             <View style={styles.styleViewInputs}>
 
                 <Input 
@@ -66,34 +58,24 @@ const index = ({navigation}) => {
                 />
 
                 <View style={styles.styleTextForgotPassword}>
-
                     <Text style={{color:"white"}}>
                         Mot de passe oublié
                     </Text>
-
                 </View>
-
                 <View style={styles.styleTextForgotPassword}>
-
                     <Text style={{color:"white"}} onPress={() => navigation.navigate('Register')}>
                         Pas encore inscrit ? Inscrivez-vous ici !
                     </Text>
-
                 </View>
-
             </View>
-
             <View style={styles.styleButtonView}>
-            
                 <Button
                     title="CONNEXION"
                     buttonStyle={styles.styleButtonConnexion}
                     titleStyle={{color:'#535151'}}
                     onPress={connexion}
                 />
-
             </View>
-
         </View>
     )
 }

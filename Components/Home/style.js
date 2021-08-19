@@ -27,14 +27,16 @@ export const styles = StyleSheet.create({
         borderRadius:10,
         marginVertical:10,
         borderColor:"black",
-        width:150,
-        height:150
-    },
-    viewMenuInfos: {
+        width:110,
+        height:140,
         backgroundColor:"white"
     },
+    viewMenuInfos: {
+        backgroundColor:"white",
+
+    },
     title: {
-        fontSize: 16,
+        fontSize: 14,
         color:"#535151",
     },
     menuName: {
